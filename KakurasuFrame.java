@@ -17,9 +17,11 @@ public class KakurasuFrame extends Puzzle {
 		
 		for(int i=0; i<36; i++) {
 		JButton numberRowCol;
-		//if(i==0 || i== 5|| i==30 || i==35) {
-			//continue;
-		//}
+		if(i==0 || i== 5|| i==30 || i==35) {
+			JLabel empty = new JLabel("");
+			ct.add(empty);
+			continue;
+		}
 		if(i==1) {
 			numberRowCol = new JButton("1");
 		}
@@ -60,5 +62,7 @@ public class KakurasuFrame extends Puzzle {
    		int range = (max - min) + 1;     
    		return (int)(Math.random() * range) + min;
    } 
+
+
 
 }

@@ -2,10 +2,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
+
 
 public class KakurasuButton extends JButton implements ActionListener {
     
     private Color c = Color.GRAY; //initial color
+    private int timesPressed = 0;
     
     public KakurasuButton(Color c) { 
         this.c=c;
@@ -24,10 +27,25 @@ public class KakurasuButton extends JButton implements ActionListener {
     }
 
     public void beenHere() {
-        c = Color.BLUE; //color turns to blue when pressed
+        if(timesPressed==3){
+            c=Color.GRAY;
+            timesPressed=0;
+        }
+        else if(timesPressed==2) {
+            c=Color.WHITE;
+            ImageIcon x = new ImageIcon("cancel.gif"); //new icon cross created
+            this.setIcon(x); //outputs cross icon on this particular button
+        }
+        else if(timesPressed==1) {
+            c=Color.BLUE;
+        }
+        else {
+            c=Color.GRAY;
+        }
     }
     
     public void actionPerformed(ActionEvent e) { //when pressed
+        timesPressed += 1;
         beenHere();
     }
     
