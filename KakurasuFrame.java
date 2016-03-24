@@ -2,9 +2,12 @@ import java.awt.*;
 import javax.swing.*;
 
 public class KakurasuFrame extends Puzzle {
+		private Color c = Color.gray;
+		private JButton[] buttons = new JButton[36];
 
 		public void setUpFrame() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 		Container ct = getContentPane();
 		ct.setLayout(new GridLayout(6,6));
@@ -14,7 +17,9 @@ public class KakurasuFrame extends Puzzle {
 		
 		for(int i=0; i<36; i++) {
 		JButton numberRowCol;
-
+		//if(i==0 || i== 5|| i==30 || i==35) {
+			//continue;
+		//}
 		if(i==1) {
 			numberRowCol = new JButton("1");
 		}
@@ -40,12 +45,13 @@ public class KakurasuFrame extends Puzzle {
 			numberRowCol = new JButton("4");
 		}
 		else if (i==11 || i==17 || i==23 || i==29 || i==31 || i==32 || i==33 || i==34) {
-			numberRowCol = new JButton(String.valueOf(randomWithRange(1,16)));
+			numberRowCol = new JButton(String.valueOf(randomWithRange(1,16))); //make special kind of button
 		}
 		else {
-			numberRowCol = new JButton();
+			numberRowCol = new KakurasuButton(c); //make special kind of button
 		}
 		ct.add(numberRowCol);
+		buttons[i]= numberRowCol;
 		}
 
 	}
