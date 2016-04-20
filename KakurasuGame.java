@@ -1,4 +1,4 @@
-public class KakurasuGame {
+public class KakurasuGame extends PuzzleGame{
 
 	int [] sumAcross = new int[5];
 	int [] sumDown = new int [5];
@@ -9,6 +9,7 @@ public class KakurasuGame {
 	static int [][] theGrid = new int[5][5];
 	private int [] rowSum = {15,10,11,2, 3};
 	private int [] colSum = {1,10,8,4,6};
+	private int [][] buttonNumber = new int [5][5];
 	private KakurasuFrame theFrame;
 	private Solver iSolve = new Solver(this);
 	 public KakurasuGame(KakurasuFrame fr) { //one parameter constructor
@@ -99,6 +100,7 @@ public class KakurasuGame {
 	}
 
 	public int getColNumber(int i) {
+
 		if(i== 1 || i==6 || i==11 || i == 16 || i==21) {
 			return 0;
 		}
@@ -135,15 +137,23 @@ public class KakurasuGame {
 				theGrid[i][j]=0;
 			}
 		}
+		int count = 1;
+		for(int i = 0; i<buttonNumber.length; i++) {
+			for(int j=0; j<buttonNumber.length; j++) {
+				buttonNumber[i][j]=count;
+				count += 1;
+			}
+		}
 		return theGrid;
 	} 	
 
-	public boolean rowConstraint() {
+	public boolean rowConstraint(int [][] theGrid) {
+		int count = 1;
 		for (int i =0; i<theGrid.length;i++) {
 			int sum = 0;
 			for(int j=0; j<theGrid.length; j++) {
 				if(theGrid[i][j]==1) {
-				sum += getAcross(theGrid[i][j]);
+					sum += getValueAcross(buttonNumber[i][j]);
 				}
 			}
 			if(sum!=rowSum[i])
@@ -152,12 +162,12 @@ public class KakurasuGame {
 		return true;
 	}
 
-	public boolean colConstraint() {
+	public boolean colConstraint(int [][] theGrid) {
 		for (int j =0; j<theGrid.length;j++) {
 			int sum = 0;
 			for(int i=0; i<theGrid.length; i++) {
 				if(theGrid[i][j]==1) {
-				sum += getDown(theGrid[i][j]);
+				sum += getValueDown(buttonNumber[i][j]);
 				}
 			}
 			if(sum!=colSum[j])
@@ -167,7 +177,60 @@ public class KakurasuGame {
 	}
 
 	public void solve() {
-		System.out.println("I'm in there!");
+		int [][] solvedGrid = iSolve.getSolvedGrid();
+		//iSolve.printGrid(solvedGrid);
+		//if(iSolve.getResult()) {
+		//	System.out.println("I'm on my way!");
+		//}
+	}
+
+	public int [][] getSolvedGrid(){
+		this.reset();
+		int [][] solvedGrid = iSolve.getSolvedGrid();
+		return solvedGrid;
+	}
+
+	public int [] getPossibles() {
+		int [] possibleValues = {0,1};
+		return possibleValues;
+	}
+
+	public boolean checkConstraints(int [][] theGrid) {
+		return rowConstraint(theGrid) && colConstraint(theGrid);
+	}
+
+	public boolean checkPossibleConstraints(int [][] theGrid) {
+		return rowPossibleConstraint(theGrid) && colPossibleConstraint(theGrid);
+	}
+
+	public boolean rowPossibleConstraint(int [][] theGrid) {
+
+		for (int i =0; i<theGrid.length;i++) {
+			int sum = 0;
+			for(int j=0; j<theGrid.length; j++) {
+				if(theGrid[i][j]==1) {
+				sum += getValueAcross(buttonNumber[i][j]); //insert i,j button
+					if(sum > rowSum[i])
+						return false;
+				}
+				
+			}
+		}
+		return true;
+	}
+
+	public boolean colPossibleConstraint(int [][] theGrid) {
+		for (int j =0; j<theGrid.length;j++) {
+			int sum = 0;
+			for(int i=0; i<theGrid.length; i++) {
+				if(theGrid[i][j]==1) {
+				sum += getValueDown(buttonNumber[i][j]);
+					if(sum>colSum[j])
+						return false;
+				}	
+			}
+		}
+		return true;
 	}
 }
 

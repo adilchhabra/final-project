@@ -15,6 +15,7 @@ public class KakurasuButton extends JButton implements ActionListener {
     private int valueDown;
     private int valueAcross;
     private boolean pressed = false;
+    private boolean isSolved = false;
 
     public KakurasuButton(Color c, int i, KakurasuFrame f, KakurasuGame g) { 
         this.c=c;
@@ -79,7 +80,12 @@ public class KakurasuButton extends JButton implements ActionListener {
         }
 
         else if(timesPressed==1) {
-            c=Color.BLUE;
+            if(isSolved){
+                c=Color.GREEN;
+            }
+            else {
+                c=Color.BLUE;
+            }
             this.setIcon(null);
             valueAcross = theGame.sumAcross(buttonNumber);
             valueDown = theGame.sumDown(buttonNumber);
@@ -103,11 +109,19 @@ public class KakurasuButton extends JButton implements ActionListener {
     }
 
     public void reset() {
+        isSolved = false;
     	if(pressed){
     	timesPressed = 2;
     	this.doClick();   
     	}    
     }
+
+    public void solve() {
+        isSolved = true;
+        timesPressed = 0;
+        this.doClick();   
+    }    
+    
     
     public void actionPerformed(ActionEvent e) { 
         timesPressed += 1;

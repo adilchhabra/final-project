@@ -12,8 +12,8 @@ public class SolverListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("You can solve!");
+		//System.out.println("You can solve!");
 		theGame.solve();
-		//theFrame.solve();
+		theFrame.solve();
 	}
 }

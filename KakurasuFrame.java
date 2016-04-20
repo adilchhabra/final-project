@@ -201,4 +201,16 @@ public class KakurasuFrame extends Puzzle {
    		return theGrid;
    	}	
 
+   	public void solve(){
+   		int [][] solvedGrid = theGame.getSolvedGrid();
+   		reset();
+   		for(int i = 0; i < solvedGrid.length; i++) {
+   			for(int j = 0; j< solvedGrid.length; j++) {
+   				if(solvedGrid[i][j]==1) {
+   					((KakurasuButton) theGrid[i][j]).solve();
+   				}
+   			}
+   		}
+   	}
+
 }
