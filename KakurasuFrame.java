@@ -4,25 +4,45 @@ import javax.swing.*;
 public class KakurasuFrame extends Puzzle {
 		private Color c = Color.gray;
 		private JButton[] buttons = new JButton[81];
-		private KakurasuGame theGame = new KakurasuGame();
+		private JButton[] kButtons = new JButton[26];
+		private JButton[][] theGrid = new JButton[5][5];
+		private KakurasuGame theGame = new KakurasuGame(this);
 		private int count = 1;
+		private int countRow =0;
+		private int countCol =0;
 		private int count2 = 1;
 		private JLabel [] labelList = new JLabel[11];
-        		
+        private Clock timer = new Clock();		
 		public void setUpFrame() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		Container ct = getContentPane();
-		ct.setLayout(new GridLayout(9,9)); //good idea to suppose 4x4 for program in initially
-		//is it possible to choose what container in the grid to fill?
+		ct.setLayout(new GridLayout(9,9)); 
 		
 		for(int i=0; i<81; i++) {
-		JButton numberRowCol;
+		JButton numberRowCol = new JButton("");
 		int randomVal = 0;
-		if(i==0 || i== 8|| i==72 || i==80) {
+		if(i==0 || i==80) {
 			JLabel empty = new JLabel("");
 			ct.add(empty);
+			continue;
+		}
+		if(i==80) {
+			ct.add(timer);
+			CounterAnimateThread cat = new CounterAnimateThread(timer);
+			cat.start();
+		}
+		if(i==72) {
+			JButton solve = new JButton("Solve");
+			solve.addActionListener(new SolverListener(theGame,this));
+			ct.add(solve);
+			continue;
+		}
+		if(i==8) {
+			JButton reset = new JButton("Reset");
+			reset.addActionListener(new ResetListener(theGame, this));
+			ct.add(reset);
 			continue;
 		}
 		else if(i==1 || i ==2 || i==3 || i ==4 || i==5 || i ==6 || i==7 || i ==9 || i==17 || i==18 || i ==27 || i==36 || i ==45 || i==54 || i == 63 || i==10 || i ==16 || i==79 || i== 71 || i == 70 || i== 73 || i == 64) {
@@ -75,19 +95,46 @@ public class KakurasuFrame extends Puzzle {
 		else if(i==55) {
 			numberRowCol = new JButton("5");
 		}
-		else if (i==25 || i==34 || i==43 || i==52 || i==61) {
-			randomVal = randomWithRange(1,10); //check range
-			theGame.setSumDown(randomVal);
-			numberRowCol = new JButton(String.valueOf(randomVal)); 
+		else if(i==25) {
+			numberRowCol = new JButton("15");
 		}
-		else if (i==65 || i==66 || i==67 || i==68 || i==69) {
-			randomVal = randomWithRange(1,10);
-			theGame.setSumAcross(randomVal);
-			numberRowCol = new JButton(String.valueOf(randomVal)); 
+		else if(i==34) {
+			numberRowCol = new JButton("10");
+		}
+		else if(i==43) {
+			numberRowCol = new JButton("11");
+		}
+		else if(i==52) {
+			numberRowCol = new JButton("2");
+		}
+		else if(i==61) {
+			numberRowCol = new JButton("3");
+		}
+		else if(i==65) {
+			numberRowCol = new JButton("1");
+		}
+		else if(i==66) {
+			numberRowCol = new JButton("10");
+		}
+		else if(i==67) {
+			numberRowCol = new JButton("8");
+		}
+		else if(i==68) {
+			numberRowCol = new JButton("4");
+		}
+		else if(i==69) {
+			numberRowCol = new JButton("6");
 		}
 		else {
 			numberRowCol = new KakurasuButton(c,count,this, theGame);
-			count = count + 1; 
+			kButtons[count] = numberRowCol;
+			count = count + 1;
+			theGrid[countRow][countCol] = numberRowCol;
+			countCol += 1;
+			if(countCol==5) {
+				countRow += 1;
+				countCol = 0;
+			}
 		}
 		ct.add(numberRowCol);
 		buttons[i]= numberRowCol;
@@ -95,52 +142,63 @@ public class KakurasuFrame extends Puzzle {
 
 	}
 
-    public int randomWithRange(int min, int max) {
-		int range = (max - min) + 1; 
-   		return (int)(Math.random() * range) + min;
-   } 
-
    	public void setMessageAcross(int i,String s) {
+   		int toChange = 0;
    		if(i<6){
-   			labelList[1].setText(s);
+   			toChange=1;
    		}
    		if(i>=6 && i<=10) {
-			labelList[2].setText(s);
+   			toChange =2;
 		}
 
 		if(i>=11 && i<=15) {
-			labelList[3].setText(s);
+			toChange=3;
 		}
 		if(i>=16 && i<=20) {
-			labelList[4].setText(s);
+			toChange=4;
 		}
-
 		if(i>=21 && i<=25) {
-			labelList[5].setText(s);
+			toChange=5;
 		}
+		labelList[toChange].setText(s);
+   		if(s.equals("✓")) labelList[toChange].setForeground(Color.green);
+   		else labelList[toChange].setForeground(Color.white);
    	}
 
    	public void setMessageDown(int i, String s) {
+   		int toChange =0;
         if(i == 1 || i==6 || i==11 || i == 16 || i==21) {
-			labelList[6].setText(s);
+        	toChange=6;
 		}
 
 		if(i == 2 || i==7 || i == 12 || i == 17 || i==22) {
-			labelList[7].setText(s);
+			toChange=7;
 		}
 
 		if(i==3 || i==8 || i==13 || i == 18 || i==23) {
-			labelList[8].setText(s);
+			toChange=8;
 		}
 
 		if(i==4 || i==9 || i == 14 || i == 19 || i==24) {
-			labelList[9].setText(s);
+			toChange=9;
 		}
 
 		if(i== 5 || i==10 || i == 15 || i == 20 || i==25) {
-			labelList[10].setText(s);
+			toChange=10;
 		}
+		labelList[toChange].setText(s);
+   		if(s.equals("✓")) labelList[toChange].setForeground(Color.green);
+   		else labelList[toChange].setForeground(Color.white);
    	}
 
+   	public void reset() {
+   		for(int i = 1; i<kButtons.length;i++) {
+   			((KakurasuButton) kButtons[i]).reset();
+   		}
+   	}
+   	
+   	public JButton [][] getGrid () {
+   		return theGrid;
+   	}	
 
 }
