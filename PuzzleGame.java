@@ -11,4 +11,16 @@ public class PuzzleGame {
 	public boolean checkPossibleConstraints(int [][] a) {
 		return true;
 	}
+	public void reset() {
+
+	}
+	public void solve() {
+
+	}
+	public int getUnsetValue() {
+		return -1;
+	}
+	public boolean userCorrect() {
+		return false;
+	}
 }

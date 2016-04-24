@@ -2,10 +2,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ResetListener implements ActionListener {
-	private KakurasuGame theGame;
-	private KakurasuFrame theFrame;
+	private PuzzleGame theGame;
+	private Puzzle theFrame;
 
-	public ResetListener(KakurasuGame g, KakurasuFrame fr) {
+	public ResetListener(PuzzleGame g, Puzzle fr) {
 		theGame = g;
 		theFrame = fr;
 	}

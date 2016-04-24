@@ -8,7 +8,7 @@ public class Solver {
 		theGame = g;
 		theGrid = g.getGrid();
 		possibleValues = g.getPossibles();
-		result = label(theGrid, g, possibleValues, 0,0); //assume possibleValues 
+		result = label(theGrid, g, possibleValues, 0,0);  
 	}
 
     public void printGrid(int [][] a) {
@@ -26,6 +26,8 @@ public class Solver {
     public boolean getResult() {
     	return result;
     }
+
+
     public boolean label(int [][] theGrid, PuzzleGame g, int [] possibleValues, int row, int col) {
     	if(row==theGrid.length) {
     		return g.checkConstraints(theGrid);
@@ -45,7 +47,7 @@ public class Solver {
     			}
     		}
     	}
-    	theGrid[row][col]=0;
+    	theGrid[row][col] = 0;
     	return false;
     }
 

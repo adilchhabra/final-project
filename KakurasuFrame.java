@@ -12,27 +12,39 @@ public class KakurasuFrame extends Puzzle {
 		private int countCol =0;
 		private int count2 = 1;
 		private JLabel [] labelList = new JLabel[11];
-        private Clock timer = new Clock();		
-		public void setUpFrame() {
+        private Clock timer = new Clock();
+        private Switcher switchBack = new Switcher(this);
+        Container ct;		
+		
+		public void setUpFrame(Container contentPane) {
+		ct = contentPane;
+		this.setTitle("Kakurasu");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-		Container ct = getContentPane();
+		//Container ct = getContentPane();
 		ct.setLayout(new GridLayout(9,9)); 
 		
 		for(int i=0; i<81; i++) {
 		JButton numberRowCol = new JButton("");
 		int randomVal = 0;
-		if(i==0 || i==80) {
+		if(i==0) {
+			JButton back = new JButton("Menu");
+			back.addActionListener(switchBack);
+			//back.addActionListener(new Switcher(new Puzzle()));
+			ct.add(back);
+			continue;
+		}
+		if(i==80) {
 			JLabel empty = new JLabel("");
 			ct.add(empty);
 			continue;
 		}
-		if(i==80) {
-			ct.add(timer);
-			CounterAnimateThread cat = new CounterAnimateThread(timer);
-			cat.start();
-		}
+		//if(i==80) {
+			//ct.add(timer);
+			//CounterAnimateThread cat = new CounterAnimateThread(timer);
+			//cat.start();
+		//}
 		if(i==72) {
 			JButton solve = new JButton("Solve");
 			solve.addActionListener(new SolverListener(theGame,this));
@@ -67,63 +79,93 @@ public class KakurasuFrame extends Puzzle {
 		}
 		else if(i==11) {
 			numberRowCol = new JButton("1");
+
 		}
 		else if(i==12) {
 			numberRowCol = new JButton("2");
+
 		}
 		else if(i==13) {
-			numberRowCol = new JButton("3");	
+			numberRowCol = new JButton("3");
+
 		}
 		else if(i==14) {
 			numberRowCol = new JButton("4");
+
 		}
 		else if(i==15) {
 			numberRowCol = new JButton("5");
+
 		}
 		else if(i==19) {
 			numberRowCol = new JButton("1");
+
 		}
 		else if(i==28) {
 			numberRowCol = new JButton("2");
+
 		}
 		else if(i==37) {
 			numberRowCol = new JButton("3");
+
 		}
 		else if(i==46) {
 			numberRowCol = new JButton("4");
+
 		}
 		else if(i==55) {
 			numberRowCol = new JButton("5");
+
 		}
 		else if(i==25) {
 			numberRowCol = new JButton("15");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==34) {
 			numberRowCol = new JButton("10");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==43) {
 			numberRowCol = new JButton("11");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==52) {
 			numberRowCol = new JButton("2");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==61) {
 			numberRowCol = new JButton("3");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==65) {
 			numberRowCol = new JButton("1");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==66) {
 			numberRowCol = new JButton("10");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==67) {
 			numberRowCol = new JButton("8");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==68) {
 			numberRowCol = new JButton("4");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else if(i==69) {
 			numberRowCol = new JButton("6");
+			numberRowCol.setBackground(Color.YELLOW);
+			numberRowCol.setOpaque(true);
 		}
 		else {
 			numberRowCol = new KakurasuButton(c,count,this, theGame);
@@ -212,5 +254,11 @@ public class KakurasuFrame extends Puzzle {
    			}
    		}
    	}
+
+   	public void init() {
+   		super.init();
+   	}
+
+
 
 }

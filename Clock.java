@@ -9,6 +9,8 @@ public class Clock extends JPanel {
 
 
     public Clock () {
+    setPreferredSize(new Dimension(50,50));
+
     }
 
     public void bumpCount() {
@@ -19,14 +21,13 @@ public class Clock extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //setPreferredSize(new Dimension(50,50));
 
         g.setColor(Color.orange);
         g.setFont(new Font("Serif",Font.BOLD,10));
 
         String counterS = ""+counter;
         
-        g.drawString(counterS, 0, 0);
+        g.drawString(counterS, 10, 10);
 
 
     }

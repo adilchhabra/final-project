@@ -80,7 +80,7 @@ public class KakurasuButton extends JButton implements ActionListener {
         }
 
         else if(timesPressed==1) {
-            if(isSolved){
+            if(isSolved) {
                 c=Color.GREEN;
             }
             else {
@@ -116,6 +116,14 @@ public class KakurasuButton extends JButton implements ActionListener {
     	}    
     }
 
+    /*public boolean isCorrect() {
+        boolean allComplete = false;
+        for(int i =1; i<26; i++) {
+            allComplete = theGame.rowComplete(i) && theGame.colComplete(i);
+        }
+        return allComplete;
+    }
+    */
     public void solve() {
         isSolved = true;
         timesPressed = 0;

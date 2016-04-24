@@ -1,9 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GameMenu extends Puzzle implements ActionListener {
+
+public class GameMenu extends Puzzle {
 
 		public void setUpFrame() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,16 +14,9 @@ public class GameMenu extends Puzzle implements ActionListener {
         l1.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
 
         JButton b1=new JButton("Kakurasu");
-        b1.addActionListener(this);
+        b1.addActionListener(new KakurasuSwitcher(this));
         add(l1);
         add(b1);
-}
-        public void actionPerformed(ActionEvent e) {
-        	Puzzle gameFrame = new KakurasuFrame();
-        	gameFrame.setUpFrame();
-			gameFrame.setPreferredSize(new Dimension(500,500));
-			gameFrame.pack();	
-			gameFrame.setVisible(true);  
         }
 	
 } 

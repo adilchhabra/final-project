@@ -126,7 +126,9 @@ public class KakurasuGame extends PuzzleGame{
 	public int getValueAcross(int i) {
 		return getColNumber(i)+1;
 	}
-
+	public int getUnsetValue(){
+		return 0;
+	}
 	public int getValueDown(int i) {
 		return getRowNumber(i)+1;
 	}
